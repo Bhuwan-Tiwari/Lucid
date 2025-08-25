@@ -77,7 +77,7 @@ Thumbs.db
 /backend/emails/
 /backend/temp/
 
-/frontend/public
+
 
 # MongoDB data (if using local files)
 /data/
