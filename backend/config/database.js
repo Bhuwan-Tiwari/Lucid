@@ -2,15 +2,10 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/email_analysis';
+    const mongoURI = process.env.MONGODB_URI;
     
-    const options = {
-      maxPoolSize: 10, 
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000, 
-    };
 
-    const conn = await mongoose.connect(mongoURI, options);
+    const conn = await mongoose.connect(mongoURI);
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     console.log(`Database: ${conn.connection.name}`);
