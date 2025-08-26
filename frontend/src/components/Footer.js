@@ -33,13 +33,13 @@ const Footer = () => {
           <div className="footer-section">
             <h3>Connect</h3>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/Bhuwan-Tiwari" target="_blank" rel="noopener noreferrer">
                 <FaGithub size={24} />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+              <a href="https://www.linkedin.com/in/bhuwan-tiwari-68783422b/" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin size={24} />
               </a>
-              <a href="mailto:contact@example.com">
+              <a href="bhuwan1200@gmail.com">
                 <FaEnvelope size={24} />
               </a>
             </div>
