@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaServer, FaArrowRight, FaLock, FaUnlock, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import { FaServer, FaLock, FaUnlock, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 const ReceivingChainVisualization = ({ receivingChain, emailInfo }) => {
   if (!receivingChain || receivingChain.length === 0) {
@@ -45,15 +45,15 @@ const ReceivingChainVisualization = ({ receivingChain, emailInfo }) => {
       <div className="card-body">
         {/* Chain Overview */}
         <div className="mb-4 p-3" style={{ backgroundColor: '#f8fafc', borderRadius: '0.5rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
             <div>
               <strong>Total Hops:</strong> {receivingChain.length}
             </div>
             <div>
-              <strong>First Server:</strong> {receivingChain[0]?.server || 'Unknown'}
+              <strong>First Server:</strong> <span style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}>{receivingChain[0]?.server || 'Unknown'}</span>
             </div>
             <div>
-              <strong>Last Server:</strong> {receivingChain[receivingChain.length - 1]?.server || 'Unknown'}
+              <strong>Last Server:</strong> <span style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}>{receivingChain[receivingChain.length - 1]?.server || 'Unknown'}</span>
             </div>
             <div>
               <strong>Journey Time:</strong> {
@@ -66,27 +66,23 @@ const ReceivingChainVisualization = ({ receivingChain, emailInfo }) => {
         </div>
 
         {/* Timeline Visualization */}
-        <div className="receiving-chain-timeline">
+        <div className="receiving-chain-timeline" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {receivingChain.map((hop, index) => (
-            <div key={index} className="timeline-item">
+            <div key={index} className="timeline-item" style={{ display: 'flex', alignItems: 'stretch',}}>
               {/* Timeline connector */}
-              {index > 0 && (
-                <div className="timeline-connector">
-                  <FaArrowRight style={{ color: '#6b7280' }} />
-                </div>
-              )}
+              
               
               {/* Hop card */}
-              <div className="hop-card">
+              <div className="hop-card" >
                 <div className="hop-header">
                   <div className="hop-number">
                     {hop.order}
                   </div>
-                  <div className="hop-title">
-                    <FaServer style={{ marginRight: '0.5rem' }} />
-                    {hop.server || 'Unknown Server'}
+                  <div className="hop-title" style={{ minWidth: 0, overflowWrap: 'anywhere', wordBreak: 'break-word', display: 'flex', alignItems: 'center' }}>
+                    <FaServer style={{ marginRight: '0.5rem', flex: '0 0 auto' }} />
+                    <span style={{ minWidth: 0 }}>{hop.server || 'Unknown Server'}</span>
                   </div>
-                  <div className="hop-icons">
+                  <div className="hop-icons" >
                     {getEncryptionIcon(hop.encryption)}
                     {getAuthIcon(hop.authResult)}
                   </div>
@@ -109,7 +105,7 @@ const ReceivingChainVisualization = ({ receivingChain, emailInfo }) => {
                     </div>
                   )}
                   {hop.authResult && (
-                    <div className="hop-detail">
+                    <div className="hop-detail" >
                       <strong>Auth:</strong> 
                       <span className={`badge ${hop.authResult === 'authenticated' ? 'badge-success' : 'badge-warning'}`}>
                         {hop.authResult}

@@ -307,9 +307,7 @@ const About = () => {
 
       {/* Footer */}
       <div className="text-center mb-6">
-        <p style={{ color: '#6b7280', fontSize: '1.125rem' }}>
-          Built with ❤️ for LucidGrowth Technical Challenge
-        </p>
+      
       </div>
     </div>
   );

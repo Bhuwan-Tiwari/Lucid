@@ -39,7 +39,7 @@ const Footer = () => {
               <a href="https://www.linkedin.com/in/bhuwan-tiwari-68783422b/" target="_blank" rel="noopener noreferrer">
                 <FaLinkedin size={24} />
               </a>
-              <a href="bhuwan1200@gmail.com">
+              <a href="mailto: bhuwan1200@gmail.com">
                 <FaEnvelope size={24} />
               </a>
             </div>
@@ -47,7 +47,7 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 LucidGrowth Email Analysis System. Built for technical demonstration.</p>
+          <p>&copy; 2024 LucidGrowth Email Analysis System.Built for technical demonstration.giDeveloped By Bhuwan.</p>
         </div>
       </div>
     </footer>
