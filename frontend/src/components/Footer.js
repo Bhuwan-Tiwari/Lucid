@@ -47,7 +47,7 @@ const Footer = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2024 LucidGrowth Email Analysis System.Built for technical demonstration.giDeveloped By Bhuwan.</p>
+          <p>&copy; 2024 LucidGrowth Email Analysis System.Built for technical demonstration.Developed By Bhuwan.</p>
         </div>
       </div>
     </footer>
