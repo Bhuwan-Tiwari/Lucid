@@ -43,7 +43,7 @@ const ReceivingChainVisualization = ({ receivingChain, emailInfo }) => {
         </h3>
       </div>
       <div className="card-body">
-        {/* Chain Overview */}
+        
         <div className="mb-4 p-3" style={{ backgroundColor: '#f8fafc', borderRadius: '0.5rem' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
             <div>
@@ -65,14 +65,14 @@ const ReceivingChainVisualization = ({ receivingChain, emailInfo }) => {
           </div>
         </div>
 
-        {/* Timeline Visualization */}
+       
         <div className="receiving-chain-timeline" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {receivingChain.map((hop, index) => (
             <div key={index} className="timeline-item" style={{ display: 'flex', alignItems: 'stretch',}}>
               {/* Timeline connector */}
               
               
-              {/* Hop card */}
+              
               <div className="hop-card" >
                 <div className="hop-header">
                   <div className="hop-number">

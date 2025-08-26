@@ -203,17 +203,15 @@ const EmailDetails = () => {
         </div>
       </div>
 
-      {/* ESP Information */}
+
       <div className="mb-6">
         <ESPDisplay espInfo={email.espInfo} emailInfo={email} />
       </div>
 
-      {/* Receiving Chain */}
       <div className="mb-6">
         <ReceivingChainVisualization receivingChain={email.receivingChain} emailInfo={email} />
       </div>
 
-      {/* Processing Errors */}
       {email.processingErrors && email.processingErrors.length > 0 && (
         <div className="card mb-6">
           <div className="card-header">
@@ -232,7 +230,6 @@ const EmailDetails = () => {
         </div>
       )}
 
-      {/* Raw Data (Collapsible) */}
       <div className="card">
         <div className="card-header">
           <h3 style={{ margin: '0' }}>Raw Email Data</h3>

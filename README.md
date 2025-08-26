@@ -24,12 +24,13 @@ A comprehensive full-stack application that automatically identifies the receivi
 email-analysis-system/
 ├── backend/                 # Node.js/Express API
 │   ├── src/
+│   │   ├── config/          # Configuration files
 │   │   ├── controllers/     # Route controllers
 │   │   ├── models/          # MongoDB models
 │   │   ├── services/        # Business logic
 │   │   ├── utils/           # Helper functions
 │   │   └── routes/          # API routes
-│   ├── config/              # Configuration files
+│   ├             
 │   └── package.json
 ├── frontend/                # React application
 │   ├── src/

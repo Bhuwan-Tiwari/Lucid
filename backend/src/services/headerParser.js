@@ -1,13 +1,4 @@
-/**
- * Email Header Parser Service
- * 
- * Parses email headers to extract receiving chain and other metadata
- */
-
 class HeaderParser {
-  /**
-   * Parse email headers and extract receiving chain
-   */
   parseHeaders(rawHeaders) {
     try {
       const headers = this.parseRawHeaders(rawHeaders);
@@ -18,35 +9,32 @@ class HeaderParser {
         headers,
         receivingChain,
         metadata,
-        success: true
+        success: true,
       };
     } catch (error) {
-      console.error('❌ Error parsing headers:', error);
+      console.error("Error parsing headers:", error);
       return {
         headers: {},
         receivingChain: [],
         metadata: {},
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
 
-  /**
-   * Parse raw headers into key-value pairs
-   */
   parseRawHeaders(rawHeaders) {
     const headers = {};
-    const lines = rawHeaders.split('\r\n');
-    let currentHeader = '';
-    let currentValue = '';
+    const lines = rawHeaders.split("\r\n");
+    let currentHeader = "";
+    let currentValue = "";
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
       // Check if line starts with whitespace (continuation of previous header)
       if (line.match(/^\s+/) && currentHeader) {
-        currentValue += ' ' + line.trim();
+        currentValue += " " + line.trim();
       } else {
         // Save previous header if exists
         if (currentHeader) {
@@ -57,13 +45,13 @@ class HeaderParser {
         }
 
         // Parse new header
-        const colonIndex = line.indexOf(':');
+        const colonIndex = line.indexOf(":");
         if (colonIndex > 0) {
           currentHeader = line.substring(0, colonIndex).trim();
           currentValue = line.substring(colonIndex + 1).trim();
         } else {
-          currentHeader = '';
-          currentValue = '';
+          currentHeader = "";
+          currentValue = "";
         }
       }
     }
@@ -79,17 +67,19 @@ class HeaderParser {
     return headers;
   }
 
-  /**
-   * Extract receiving chain from Received headers
-   */
+  // Extract receiving chain from Received headers
+
   extractReceivingChain(headers) {
-    const receivedHeaders = headers['received'] || [];
+    const receivedHeaders = headers["received"] || [];
     const chain = [];
 
     // Process Received headers in reverse order (oldest first)
     for (let i = receivedHeaders.length - 1; i >= 0; i--) {
       const received = receivedHeaders[i];
-      const hop = this.parseReceivedHeader(received, receivedHeaders.length - i);
+      const hop = this.parseReceivedHeader(
+        received,
+        receivedHeaders.length - i
+      );
       if (hop) {
         chain.push(hop);
       }
@@ -98,9 +88,8 @@ class HeaderParser {
     return chain;
   }
 
-  /**
-   * Parse individual Received header
-   */
+  // Parse individual Received header
+
   parseReceivedHeader(receivedHeader, order) {
     try {
       const hop = {
@@ -110,7 +99,7 @@ class HeaderParser {
         timestamp: null,
         protocol: null,
         encryption: null,
-        authResult: null
+        authResult: null,
       };
 
       // Extract server information
@@ -120,7 +109,9 @@ class HeaderParser {
       }
 
       // Extract IP address
-      const ipMatch = receivedHeader.match(/\[([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\]/);
+      const ipMatch = receivedHeader.match(
+        /\[([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})\]/
+      );
       if (ipMatch) {
         hop.ip = ipMatch[1];
       }
@@ -142,134 +133,131 @@ class HeaderParser {
       }
 
       // Extract encryption information
-      if (receivedHeader.includes('TLS') || receivedHeader.includes('SSL')) {
-        hop.encryption = 'TLS/SSL';
-      } else if (receivedHeader.includes('STARTTLS')) {
-        hop.encryption = 'STARTTLS';
+      if (receivedHeader.includes("TLS") || receivedHeader.includes("SSL")) {
+        hop.encryption = "TLS/SSL";
+      } else if (receivedHeader.includes("STARTTLS")) {
+        hop.encryption = "STARTTLS";
       }
 
       // Extract authentication result
-      if (receivedHeader.includes('authenticated')) {
-        hop.authResult = 'authenticated';
-      } else if (receivedHeader.includes('unauthenticated')) {
-        hop.authResult = 'unauthenticated';
+      if (receivedHeader.includes("authenticated")) {
+        hop.authResult = "authenticated";
+      } else if (receivedHeader.includes("unauthenticated")) {
+        hop.authResult = "unauthenticated";
       }
 
       return hop;
     } catch (error) {
-      console.error('❌ Error parsing received header:', error);
+      console.error("❌ Error parsing received header:", error);
       return null;
     }
   }
 
-  /**
-   * Extract additional metadata from headers
-   */
+  //Extract additional metadata from headers
+
   extractMetadata(headers) {
     const metadata = {};
 
     // SPF information
-    if (headers['received-spf']) {
-      metadata.spf = headers['received-spf'][0];
+    if (headers["received-spf"]) {
+      metadata.spf = headers["received-spf"][0];
     }
 
     // DKIM information
-    if (headers['dkim-signature']) {
-      metadata.dkim = headers['dkim-signature'];
+    if (headers["dkim-signature"]) {
+      metadata.dkim = headers["dkim-signature"];
     }
 
     // DMARC information
-    if (headers['authentication-results']) {
-      metadata.authenticationResults = headers['authentication-results'];
+    if (headers["authentication-results"]) {
+      metadata.authenticationResults = headers["authentication-results"];
     }
 
     // Return-Path
-    if (headers['return-path']) {
-      metadata.returnPath = headers['return-path'][0];
+    if (headers["return-path"]) {
+      metadata.returnPath = headers["return-path"][0];
     }
 
     // Message-ID
-    if (headers['message-id']) {
-      metadata.messageId = headers['message-id'][0];
+    if (headers["message-id"]) {
+      metadata.messageId = headers["message-id"][0];
     }
 
     // X-Originating-IP
-    if (headers['x-originating-ip']) {
-      metadata.originatingIp = headers['x-originating-ip'][0];
+    if (headers["x-originating-ip"]) {
+      metadata.originatingIp = headers["x-originating-ip"][0];
     }
 
     // X-Mailer
-    if (headers['x-mailer']) {
-      metadata.mailer = headers['x-mailer'][0];
+    if (headers["x-mailer"]) {
+      metadata.mailer = headers["x-mailer"][0];
     }
 
     // User-Agent
-    if (headers['user-agent']) {
-      metadata.userAgent = headers['user-agent'][0];
+    if (headers["user-agent"]) {
+      metadata.userAgent = headers["user-agent"][0];
     }
 
     // X-Priority
-    if (headers['x-priority']) {
-      metadata.priority = headers['x-priority'][0];
+    if (headers["x-priority"]) {
+      metadata.priority = headers["x-priority"][0];
     }
 
     // Content-Type
-    if (headers['content-type']) {
-      metadata.contentType = headers['content-type'][0];
+    if (headers["content-type"]) {
+      metadata.contentType = headers["content-type"][0];
     }
 
     return metadata;
   }
 
-  /**
-   * Get all header names for debugging
-   */
+  //Get all header names for debugging
   getHeaderNames(rawHeaders) {
     const headers = this.parseRawHeaders(rawHeaders);
     return Object.keys(headers).sort();
   }
 
-  /**
-   * Get specific header value
-   */
+  //Get specific header value
   getHeader(rawHeaders, headerName) {
     const headers = this.parseRawHeaders(rawHeaders);
     return headers[headerName.toLowerCase()] || null;
   }
 
-  /**
-   * Validate receiving chain for completeness
-   */
+  //Validate receiving chain for completeness
   validateReceivingChain(chain) {
     const validation = {
       isValid: true,
       warnings: [],
-      errors: []
+      errors: [],
     };
 
     if (chain.length === 0) {
       validation.isValid = false;
-      validation.errors.push('No receiving chain found');
+      validation.errors.push("No receiving chain found");
       return validation;
     }
 
     // Check for missing timestamps
-    const missingTimestamps = chain.filter(hop => !hop.timestamp);
+    const missingTimestamps = chain.filter((hop) => !hop.timestamp);
     if (missingTimestamps.length > 0) {
-      validation.warnings.push(`${missingTimestamps.length} hop(s) missing timestamps`);
+      validation.warnings.push(
+        `${missingTimestamps.length} hop(s) missing timestamps`
+      );
     }
 
     // Check for missing server information
-    const missingServers = chain.filter(hop => !hop.server);
+    const missingServers = chain.filter((hop) => !hop.server);
     if (missingServers.length > 0) {
-      validation.warnings.push(`${missingServers.length} hop(s) missing server information`);
+      validation.warnings.push(
+        `${missingServers.length} hop(s) missing server information`
+      );
     }
 
     // Check chronological order
     for (let i = 1; i < chain.length; i++) {
-      if (chain[i].timestamp && chain[i-1].timestamp) {
-        if (chain[i].timestamp < chain[i-1].timestamp) {
-          validation.warnings.push('Timestamps not in chronological order');
+      if (chain[i].timestamp && chain[i - 1].timestamp) {
+        if (chain[i].timestamp < chain[i - 1].timestamp) {
+          validation.warnings.push("Timestamps not in chronological order");
           break;
         }
       }
